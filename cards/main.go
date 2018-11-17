@@ -1,21 +1,23 @@
 package main
 
+import (
+	"fmt"
+)
+
 func main() {
-	//dealing with splices
-	cards := deck{"Ace of Diamonds", newCard()}
-	cards = append(cards, "Six of Spades")
+	cards := newDeck()
 
-	//iterate over slice of cards
+	hand, remainingCards := deal(cards, 5)
 
-	// for i, card := range cards {
-	// 	fmt.Println(i, card)
-	// }
+	hand.print()
+	fmt.Println("")
 
-	//using function instead
-	cards.print()
+	remainingCards.print()
 
 }
 
-func newCard() string {
-	return "Five of Diamonds"
-}
+//no longer needed below
+
+// func newCard() string {
+// 	return "Five of Diamonds"
+// }

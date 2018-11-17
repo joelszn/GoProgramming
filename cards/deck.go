@@ -2,6 +2,9 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
+	"strings"
 )
 
 //create a new type of 'deck'
@@ -29,6 +32,7 @@ func newDeck() deck {
 	// ,"Seven","Eight","Nine", "Ten"
 	// }
 
+	// instead of using i & j in Go we can use '_'
 	for _, suit := range cardSuits {
 		for _, num := range cardNumbers {
 			cards = append(cards, num+" of "+suit)
@@ -55,12 +59,25 @@ func deal(d deck, handSize int) (deck, deck) {
 	return d[:handSize], d[handSize:]
 }
 
-// TODO
-func saveToFile() {
-
+func (d deck) saveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
 }
 
-// TODO
-func newDeckFromFile() {
+func newDeckFromFile(filename string) deck {
+	bs, err := ioutil.ReadFile(filename)
+	if err != nil {
+		fmt.Println("Error", err)
+		os.Exit(1)
+	}
+
+	// s the slice of string from the split
+	// s is by convention
+	s := strings.Split(string(bs), ",") // Ace of Spades,Three of Clubs,
+	return deck(s)
+}
+
+// helper fcn will take a deck and return string representation
+func (d deck) toString() string {
+	return strings.Join([]string(d), ",")
 
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"strings"
 )
@@ -49,9 +50,18 @@ func (d deck) print() {
 	}
 }
 
-// TODO
-func shuffle() {
+func (d deck) shuffle() {
 
+	// looping thru deck slice
+	for i := range d {
+		// random # being generated
+		// len(d) returns length of slice
+		newPosition := rand.Intn(len(d) - 1)
+
+		// take whatever is at newPosition and assign it to i
+		// take whatever is at index and assign it to newPosition
+		d[i], d[newPosition] = d[newPosition], d[i]
+	}
 }
 
 //we can return two separate things from a fcn in Go
@@ -64,6 +74,9 @@ func (d deck) saveToFile(filename string) error {
 }
 
 func newDeckFromFile(filename string) deck {
+
+	// byteslice is set to the filename input
+	// err stores error message
 	bs, err := ioutil.ReadFile(filename)
 	if err != nil {
 		fmt.Println("Error", err)

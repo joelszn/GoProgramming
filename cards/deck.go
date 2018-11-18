@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 //create a new type of 'deck'
@@ -51,12 +52,18 @@ func (d deck) print() {
 }
 
 func (d deck) shuffle() {
+	//addressing source randomization issue
+	source := rand.NewSource(time.Now().UnixNano()) // time.Now().UnixNano() generates a different int64 # everytime we start up our program
+
+	// assigning var r to new random source
+	// in Go when using random it generates it from source and if the source is the same the numbers will be also
+	r := rand.New(source)
 
 	// looping thru deck slice
 	for i := range d {
 		// random # being generated
 		// len(d) returns length of slice
-		newPosition := rand.Intn(len(d) - 1)
+		newPosition := r.Intn(len(d) - 1)
 
 		// take whatever is at newPosition and assign it to i
 		// take whatever is at index and assign it to newPosition
@@ -70,6 +77,12 @@ func deal(d deck, handSize int) (deck, deck) {
 }
 
 func (d deck) saveToFile(filename string) error {
+	// receiving d of type deck and we're asking when the fcn is called for a filename parameter
+	//then we return an error type but doesn't have to be one
+
+	//we create the filename, and conver that into a slice of type byte code
+	//0666 is just os permission code that gives all permissions
+
 	return ioutil.WriteFile(filename, []byte(d.toString()), 0666)
 }
 

@@ -4,30 +4,27 @@ import (
 	"fmt"
 )
 
+type contactInfo struct {
+	email   string
+	zipCode int
+}
+
 //struct being defined
 type person struct {
 	firstName string
 	lastName  string
+	contactInfo
 }
 
 func main() {
-	joel := person{"Joel", "Duran"}
+	jim := person{
+		firstName: "Jim",
+		lastName:  "Nelson",
+		contactInfo: contactInfo{
+			email:   "jim@gmail.com",
+			zipCode: 9400,
+		},
+	}
 
-	//OR
-	//better syntax for defining a struct
-	jason := person{firstName: "Jason", lastName: "Mraz"}
-
-	//OR
-
-	var peter person
-
-	//updating the values on the struct
-
-	peter.firstName = "Peter"
-	peter.lastName = "Perez"
-
-	fmt.Println(joel, jason)
-	//will print out all the different fieldnames & values
-	fmt.Printf("%+v", peter)
-
+	fmt.Printf("%+v", jim)
 }

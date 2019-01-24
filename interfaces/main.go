@@ -2,6 +2,10 @@ package main
 
 import "fmt"
 
+// the word bot doesn't matter it is just a placeholder
+type bot interface {
+	getGreeting() string
+}
 type englishBot struct{}
 type spanishBot struct{}
 
@@ -13,12 +17,8 @@ func main() {
 	printGreeting(sb)
 }
 
-func printGreeting(eb englishBot) {
-	fmt.Println(eb.getGreeting())
-}
-
-func printGreeting(sb spanishBot) {
-	fmt.Println(eb.getGreeting())
+func printGreeting(b bot) {
+	fmt.Println(b.getGreeting())
 }
 
 // we can omit the value if it is not being used

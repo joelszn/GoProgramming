@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 )
@@ -13,8 +14,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	// make a byte slice with n amount of empty space
-	bs := make([]byte, 99999)
-	resp.Body.Read(bs)
-	fmt.Println(string(bs))
+	// same thing as prev code just simplified returns HTML
+	io.Copy(os.Stdout, resp.Body)
 }
